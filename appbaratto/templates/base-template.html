@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>App Baratto - {% block title %} {% endblock %}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="../static/img/favicon.png" rel="icon">
+  <link href="../static/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../static/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="../static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../static/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="../static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="../static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center header-transparent">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="/"><span>Baratto Online</span></a></h1>
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="/">Home</a></li>
+            {% if current_user.is_authenticated %}
+            <li class="dropdown"><a href=""><span>{{ current_user.Email }}</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                    <li><a href="/profilo">Il tuo profilo</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li><a class="nav-link" href="/login">Login</a></li>
+		    <li><a class="nav-link" href="/registrazione">Registrazione</a></li>
+            {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <section class="breadcrumbs {{ hideBreadcrumbs }}">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% block breadcrumbs %} {% endblock %}</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>{% block breadcrumbslinks %} {% endblock %}</li>
+          </ol>
+        </div>
+      </div>
+  </section><!-- End Breadcrumbs Section -->
+
+  <!-- ======= Main Content ======= -->
+
+    {% block content %} {% endblock %}
+
+  <!-- ======= End Main Content ======= -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" style="background:#fff">
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Università di Napoli Parthenope</span></strong>
+      </div>
+      <div class="credits">
+        Realizzato da: <a href="#">Emanuele Bocchino Mat.0124001658</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../static/vendor/purecounter/purecounter.js"></script>
+  <script src="../static/vendor/aos/aos.js"></script>
+  <script src="../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../static/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../static/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="../static/js/main.js"></script>
+
+</body>
+
+</html>

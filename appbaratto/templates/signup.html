@@ -1,0 +1,69 @@
+{% extends "base-template.html" %}
+
+{% block title %}Registrazione{% endblock %}
+{% block breadcrumbs %}Signup Page{% endblock %}
+{% block breadcrumbslinks %}Signup Page{% endblock %}
+
+{% block content %}
+
+<section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+      <section id="contact" class="contact">
+         <div class="container">
+            <div class="section-title" data-aos="fade-up">
+               <h2>Registrazione</h2>
+               <p>CREA UN ACCOUNT</p>
+            </div>
+            <div class="row">
+               <div class="col-lg-6 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+                  <form action="" method="post" role="form" class="email-form">
+                     <div class="row">
+                            {{ form.hidden_tag() }}
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            {{ form.nome(class="form-control", placeholder=form.nome.description) }}
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            {{ form.cognome(class="form-control", placeholder=form.cognome.description) }}
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.password(class="form-control", placeholder=form.password.description) }}
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.password2(class="form-control", placeholder=form.password2.description) }}
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                             {{ form.regEmail(class="form-control", placeholder=form.regEmail.description) }}
+                        </div>
+
+                        <div class="col-md-8 form-group mt-3 mt-md-0">
+                           {{ form.citta(class="form-control",  placeholder=form.citta.description) }}
+                        </div>
+
+                        <div class="col-md-4 form-group mt-3 mt-md-0">
+                            {{ form.provincia(class="form-control selectMod") }}
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.via(class="form-control", placeholder=form.via.description) }}
+                        </div>
+                     </div>
+                     <div class="text-left mt-2">
+                         {{ form.submit() }}
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+
+{% endblock %}

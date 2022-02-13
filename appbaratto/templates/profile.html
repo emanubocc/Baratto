@@ -1,0 +1,68 @@
+{% extends "base-template.html" %}
+
+{% block title %}Login{% endblock %}
+{% block breadcrumbs %}Profile Page{% endblock %}
+{% block breadcrumbslinks %}Profile Page{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+    <div class="container">
+        <p>Benvenuto, <b>{{ current_user.Nome }} {{ current_user.Cognome }}</b></p>
+    </div>
+
+    <section id="features" class="features">
+      <div class="container">
+
+     <div class="row" data-aos="fade-left">
+         <div class="col-lg-6 col-md-6 cursor-p" onclick="window.location='/profilo/modifica-profilo';">
+            <div class="icon-box aos-init aos-animate p-5" data-aos="zoom-in" data-aos-delay="100">
+              <i class="ri-file-list-3-line" style="color: #11dbcf;"></i>
+              <h3><a href="/modifica-profilo">Modifica profilo</a></h3>
+            </div>
+          </div>
+         <div class="col-lg-6 col-md-6 cursor-p" onclick="window.location='/';">
+            <div class="icon-box p-5" data-aos="zoom-in" data-aos-delay="150">
+              <i class="ri-database-2-line" style="color: #47aeff;"></i>
+              <h3><a href="">I tuoi annunci</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 mt-4 cursor-p" onclick="window.location='/profilo/aggiungi-oggetto';">
+            <div class="icon-box p-5" data-aos="zoom-in" data-aos-delay="200">
+              <i class="ri-store-line" style="color: #ffbb2c;"></i>
+              <h3><a href="/profilo/aggiungi-oggetto">Aggiungi un annuncio</a></h3>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 mt-4 cursor-p" onclick="window.location='/';">
+            <div class="icon-box p-5" data-aos="zoom-in" data-aos-delay="250">
+              <i class="ri-base-station-line" style="color: #ff5828;"></i>
+              <h3><a href="">Vedi annunci</a></h3>
+            </div>
+          </div>
+         <div class="col-lg-4 col-md-4 mt-4 cursor-p" onclick="window.location='/';">
+            <div class="icon-box p-5" data-aos="zoom-in" data-aos-delay="300">
+              <i class="ri-price-tag-2-line" style="color: #4233ff;"></i>
+              <h3><a href="">Leggi Messaggi</a></h3>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+   </div>
+</section>
+{% endblock %}
+
+<input type="email" name="loginEmail" class="form-control" id="loginEmail" placeholder="Email" required>
+<input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" required>
+<button type="submit">Login</button>
+

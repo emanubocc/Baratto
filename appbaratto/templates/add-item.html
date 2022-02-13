@@ -1,0 +1,77 @@
+{% extends "base-template.html" %}
+
+{% block title %}Aggiungi annuncio{% endblock %}
+{% block breadcrumbs %}Aggiungi annuncio{% endblock %}
+{% block breadcrumbslinks %}Profilo / Aggiungi annuncio{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+      <section id="contact" class="contact">
+         <div class="container">
+
+            <div class="row">
+
+
+
+               <div class="col-lg-6 mt-lg-0 p-4" data-aos="fade-left" data-aos-delay="200">
+                   <div class="section-title" data-aos="fade-up">
+                        <h2>Aggiungi Oggetto</h2>
+                        <p>Inserisci  il tuo annuncio</p>
+                    </div>
+                  <form action="" method="post" role="form" class="email-form" enctype="multipart/form-data">
+                     <div class="row">
+                            {{ form.hidden_tag() }}
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                             <label>Informazioni Annuncio:</label>
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.nome(class="form-control", placeholder=form.nome.description) }}
+                        </div>
+
+                         <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.desc(class="form-control", placeholder=form.desc.description) }}
+                        </div>
+
+                         <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.provincia(class="form-control selectMod") }}
+                        </div>
+
+                         <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.image }}
+                        </div>
+
+                     </div>
+                     <div class="text-left mt-2">
+                        {{ form.submit() }}
+                     </div>
+                  </form>
+               </div>
+
+
+                <div class="col-lg-6 mt-lg-0 text-center" data-aos="fade-left" data-aos-delay="200">
+                  <img src="../static/img/details-2.png" width="450" class="p-4">
+                </div>
+
+
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+{% endblock %}
+
+<input type="email" name="loginEmail" class="form-control" id="loginEmail" placeholder="Email" required>
+<input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" required>
+<button type="submit">Login</button>
+
