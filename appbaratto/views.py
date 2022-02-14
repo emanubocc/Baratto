@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 
 from sqlalchemy import update, select, delete
 from .forms import EditForm, ItemsForm
-from .models import Utente
+from .models import Utente, Oggetto
 from . import db
 
 views = Blueprint('views', __name__)
@@ -33,14 +33,17 @@ def addItem():
         provincia = form_items.provincia.data
         filename = secure_filename(form_items.image.data.filename)
 
+        new_item = Oggetto(nome, desc, filename, provincia, current_user.id)
+        # Inserimento in DB
+        try:
+            db.session.add(new_item)
+            db.session.commit()
+        except Exception as e:
+            print(f"Eccezione: {e}")
+            db.session.rollback()
 
-        # Upload
+        # Upload immagine
         form_items.image.data.save('uploads/images/' + filename)
-        # Fine upload
-
-        new_item = Oggetto(nome, desc, filename, provincia)
-        db.session.add(new_item)
-        db.session.commit()
         flash('Inserimento annuncio avvenuto con successo', category='success')
 
     return render_template('add-item.html', form=form_items)

@@ -18,6 +18,9 @@ class Utente(db.Model, UserMixin):
     Provincia = db.Column(db.String(30), nullable=False)
     Via = db.Column(db.String(120), nullable=False)
 
+    # Tabella di relazione 1 Utente : N Oggetti
+    Oggetto = db.relationship("Oggetto")
+
     def __init__(self, nome, cognome, password, email, citta, provincia, via):
 
         self.Nome = nome
@@ -43,12 +46,16 @@ class Oggetto(db.Model):
     Img = db.Column(db.String(100), unique=True, nullable=False)
     Provincia = db.Column(db.String(30), nullable=False)
 
-    def __init__(self, nome, desc, img, provincia):
+    # Tabella di relazione 1 Utente : N Oggetti
+    id_utente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+
+    def __init__(self, nome, desc, img, provincia, id_utente):
 
         self.Nome = nome
         self.Desc = desc
         self.Img = img
         self.Provincia = provincia
+        self.id_utente = id_utente
 
     def __repr__(self):
         return f'<Prodotto {self.id + self.Nome + self.Desc + self.Img + self.Provincia!r}>'

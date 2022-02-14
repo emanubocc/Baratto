@@ -27,7 +27,7 @@ def registration():
         utente = Utente.query.filter_by(Email=regEmail).first()
 
         if utente:
-            flash('Email già estistente.', category='error')
+            flash('Account già estistente.', category='error')
         elif len(regEmail) < 4:
             flash('Il campo email deve essere maggiore di 3 caratteri', category='error')
         elif len(nome) < 2:
@@ -38,8 +38,14 @@ def registration():
             flash('La password deve essere almeno 6 caratteri', category='error')
         else:
             new_user = Utente(nome, cognome, password, regEmail, citta, provincia, via)
-            db.session.add(new_user)
-            db.session.commit()
+
+            try:
+                db.session.add(new_user)
+                db.session.commit()
+            except Exception as e:
+                print(f"Eccezione: {e}")
+                db.session.rollback()
+
             flash('Account creato con successo!', category='success')
 
     return render_template('signup.html', form=form_registration)
@@ -63,7 +69,7 @@ def login():
             else:
                 flash('Password non corretta.', category='error')
         else:
-            flash('Email non esistente.', category='error')
+            flash('Email non associata a nessun account.', category='error')
 
     return render_template('login.html', form=form_login)
 
