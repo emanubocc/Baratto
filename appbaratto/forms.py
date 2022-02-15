@@ -1,6 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import (StringField, SubmitField, PasswordField, EmailField, SelectField, HiddenField, TextAreaField)
-from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms import (StringField, SubmitField, PasswordField, EmailField, SelectField, HiddenField, TextAreaField,MultipleFileField)
 
 from wtforms.validators import DataRequired
 from .utility import PROVINCIE_CHOICES
@@ -41,6 +40,7 @@ class ItemsForm(FlaskForm):
     nome = StringField("", validators=[DataRequired()], description="Nome oggetto")
     desc = TextAreaField("", validators=[DataRequired()], description="Descrizione oggetto...")
     provincia = SelectField("", validators=[DataRequired()], choices=PROVINCIE_CHOICES)
-    image = FileField(u'image',  validators=[FileRequired(),  FileAllowed(['jpg', 'png'], 'Images only!')])
+    image = MultipleFileField('Images')
+
     submit = SubmitField("Invia")
 

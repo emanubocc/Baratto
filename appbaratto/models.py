@@ -43,19 +43,23 @@ class Oggetto(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Nome = db.Column(db.String(64), nullable=False)
     Desc = db.Column(db.String(250), nullable=False)
-    Img = db.Column(db.String(100), unique=True, nullable=False)
+    Img_1 = db.Column(db.String(75), unique=True, nullable=False)
+    Img_2 = db.Column(db.String(75), unique=True, nullable=True)
+    Img_3 = db.Column(db.String(75), unique=True, nullable=True)
     Provincia = db.Column(db.String(30), nullable=False)
 
     # Tabella di relazione 1 Utente : N Oggetti
     id_utente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
 
-    def __init__(self, nome, desc, img, provincia, id_utente):
+    def __init__(self, nome, desc, img_1, img_2, img_3, provincia, id_utente):
 
         self.Nome = nome
         self.Desc = desc
-        self.Img = img
+        self.Img_1 = img_1
+        self.Img_2 = img_2
+        self.Img_3 = img_3
         self.Provincia = provincia
         self.id_utente = id_utente
 
     def __repr__(self):
-        return f'<Prodotto {self.id + self.Nome + self.Desc + self.Img + self.Provincia!r}>'
+        return f'<Prodotto {self.id + self.Nome + self.Desc + self.Img_1 + self.Img_2 + self.Img_3 + self.Provincia!r}>'

@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash
 from flask_login import login_required, current_user
 from werkzeug.utils import secure_filename
 
-from sqlalchemy import update, select, delete
+from sqlalchemy import update, select, delete, desc
 from .forms import EditForm, ItemsForm
 from .models import Utente, Oggetto
 from . import db
@@ -14,7 +14,20 @@ views = Blueprint('views', __name__)
 @views.route('/')
 def home():
     addclass = 'Homepage'
-    return render_template('homepage.html', hideBreadcrumbs = addclass)
+    return render_template('homepage.html', hideBreadcrumbs=addclass)
+
+@views.route('/vedi-annunci')
+def allItems():
+
+    all_items = Oggetto.query.order_by(desc(Oggetto.Provincia)).all()
+    return render_template('all-items.html', items=all_items)
+
+@views.route('/vedi-annunci/<int:id_annuncio>')
+def item_selected( id_annuncio ):
+    item = Oggetto.query.filter_by(id=id_annuncio).one_or_none()
+    if( item == None):
+        flash('Nessun annuncio trovato con questo id.', category='error')
+    return render_template('selected-item.html', item=item)
 
 
 @views.route('/profilo')
@@ -27,24 +40,46 @@ def profile():
 @login_required
 def addItem():
     form_items = ItemsForm()
+
     if form_items.validate_on_submit():
         nome = form_items.nome.data
         desc = form_items.desc.data
         provincia = form_items.provincia.data
-        filename = secure_filename(form_items.image.data.filename)
 
-        new_item = Oggetto(nome, desc, filename, provincia, current_user.id)
+        pics = request.files.getlist(form_items.image.name)
+        img_urls = []
+
+        if pics:
+            for img in pics:
+                file_name = secure_filename(img.filename)
+                img_urls.append(file_name)
+                img.save('appbaratto/static/uploads/images/' + file_name)
+
+        img_1 = img_urls[0]
+        img_2 = ""
+        img_3 = ""
+
+        if (len(img_urls) == 2):
+            img_2 = img_urls[1]
+        if (len(img_urls) == 3):
+            img_3 = img_urls[2]
+
+        new_item = Oggetto(nome, desc, img_1, img_2, img_3, provincia, current_user.id)
+
         # Inserimento in DB
         try:
             db.session.add(new_item)
             db.session.commit()
+            flash('Inserimento annuncio avvenuto con successo', category='success')
+        except Exception as IntegrityError:
+            flash(f"Le immagini presentano nomi già utilizzati.", category='error')
+            db.session.rollback()
         except Exception as e:
-            print(f"Eccezione: {e}")
+            flash(f"Eccezione: {e}", category='error')
             db.session.rollback()
 
-        # Upload immagine
-        form_items.image.data.save('uploads/images/' + filename)
-        flash('Inserimento annuncio avvenuto con successo', category='success')
+
+
 
     return render_template('add-item.html', form=form_items)
 
