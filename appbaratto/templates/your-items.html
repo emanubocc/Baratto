@@ -1,0 +1,45 @@
+{% extends "base-template.html" %}
+
+{% block title %}I tuoi annunci{% endblock %}
+{% block breadcrumbs %}I tuoi annunci{% endblock %}
+{% block breadcrumbslinks %}Profilo / I tuoi annunci{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+    {% if items %}
+    <div class="card-group">
+       {% for item in items %}
+        <div class="col-lg-3 col-md-3 mt-4 " data-aos="fade-left" data-aos-delay="200">
+           <div class="card" style="width: 18rem;">
+             <img src="../static/uploads/images/{{ item.Img_1 }}" class="card-img-top" alt="...">
+                <div class="card-body py-2 px-0">
+                    <h5 class="card-title">{{ item.Nome }}</h5>
+
+                </div>
+                <ul class="list-group list-group-flush">
+                      <li class="list-group-item"><a href="/vedi-annunci/elimina/{{ item.id }}" class="float-end">Elimina Annuncio <i class='bx bx-message-square-x'></i></a></li>
+                      <li class="list-group-item"><a href="/vedi-annunci/modifica/{{ item.id }}" class="float-end">Modifica Annuncio <i class='bx bx-edit-alt'></i></a></li>
+                      <li class="list-group-item"><a href="/vedi-annunci/{{ item.id }}" class="float-end">Vedi Annuncio <i class='bx bx-search-alt-2'></i></a></li>
+                </ul>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    {% endif %}
+
+   </div>
+</section>
+{% endblock %}
+
+
+

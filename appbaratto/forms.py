@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField, PasswordField, EmailField, SelectField, HiddenField, TextAreaField,MultipleFileField)
 
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length
 from .utility import PROVINCIE_CHOICES
 
 
@@ -14,14 +14,14 @@ class LoginForm(FlaskForm):
 
 # Definizione campi form di Registrazione
 class RegistrationForm(FlaskForm):
-    nome = StringField("", validators=[DataRequired()], description="Nome")
-    cognome = StringField("", validators=[DataRequired()], description="Cognome")
-    password = PasswordField("", validators=[DataRequired()], description="Password")
+    nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')], description="Nome")
+    cognome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')], description="Cognome")
+    password = PasswordField("", validators=[DataRequired(), Length(min=6, max=12, message='Min 6 caratteri, Max 12')], description="Password")
     password2 = PasswordField("", validators=[DataRequired()], description="Ripeti Password")
-    regEmail = EmailField("", validators=[DataRequired()], description="Email")
-    citta = StringField("", validators=[DataRequired()], description="Città")
+    regEmail = EmailField("", validators=[DataRequired(), Length( max=120, message='Max 120 caratteri')], description="Email")
+    citta = StringField("", validators=[DataRequired(), Length( max=30, message='Max 30 caratteri')], description="Città")
     provincia = SelectField("", validators=[DataRequired()], choices=PROVINCIE_CHOICES)
-    via = StringField("", validators=[DataRequired()], description="Via")
+    via = StringField("", validators=[DataRequired(), Length( max=120, message='Max 120 caratteri')], description="Via")
     submit = SubmitField("Registrati")
 
 
@@ -37,10 +37,10 @@ class EditForm(FlaskForm):
 
 # Form per inserimento oggetti
 class ItemsForm(FlaskForm):
-    nome = StringField("", validators=[DataRequired()], description="Nome oggetto")
-    desc = TextAreaField("", validators=[DataRequired()], description="Descrizione oggetto...")
+    nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')], description="Nome oggetto")
+    desc = TextAreaField("", validators=[DataRequired(),  Length(min=1, max=250, message='Massimo 250 Caratteri')], description="Descrizione oggetto...")
     provincia = SelectField("", validators=[DataRequired()], choices=PROVINCIE_CHOICES)
-    image = MultipleFileField('Images')
+    image = MultipleFileField('Images', validators=[DataRequired()] )
 
     submit = SubmitField("Invia")
 

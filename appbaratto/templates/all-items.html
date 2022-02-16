@@ -19,12 +19,12 @@
     <div class="col-lg-3 col-md-3 mt-4 " data-aos="fade-left" data-aos-delay="200">
        <div class="card" style="width: 18rem;">
          <img src="../static/uploads/images/{{ item.Img_1 }}" class="card-img-top" alt="...">
-            <div class="card-body">
+            <div class="card-body px-0 py-4">
                 <h5 class="card-title">{{ item.Nome }}</h5>
                 <p class="card-text">{{ item.Desc }}</p>
             </div>
             <ul class="list-group list-group-flush">
-                  <li class="list-group-item"><a href="/vedi-annunci/{{ item.id }}" class="float-end">Vedi annuncio</a></li>
+                <li class="list-group-item"><a href="/vedi-annunci/{{ item.id }}" class="float-end">Vedi Annuncio <i class='bx bx-search-alt-2'></i></a></li>
             </ul>
         </div>
     </div>
@@ -35,7 +35,4 @@
 </section>
 {% endblock %}
 
-<input type="email" name="loginEmail" class="form-control" id="loginEmail" placeholder="Email" required>
-<input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" required>
-<button type="submit">Login</button>
 
