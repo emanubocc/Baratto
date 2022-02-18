@@ -1,0 +1,85 @@
+{% extends "base-template.html" %}
+
+{% block title %}Proponi Oggetto{% endblock %}
+{% block breadcrumbs %}Proponi Oggetto{% endblock %}
+{% block breadcrumbslinks %}Proponi{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+      <section id="contact" class="contact">
+         <div class="container">
+
+            <div class="row">
+
+
+               <div class="col-lg-6 mt-lg-0 p-4" data-aos="fade-left" data-aos-delay="200">
+                   <div class="section-title" data-aos="fade-up">
+                        <h2>Proponi Oggetto</h2>
+                        <p>Inserisci un articolo di scambio</p>
+                    </div>
+                  <form action="" method="post" role="form" class="email-form" enctype="multipart/form-data">
+                     <div class="row">
+                            {{ form.hidden_tag() }}
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                             <label>Informazioni Annuncio:</label>
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.nome(class="form-control", placeholder=form.nome.description) }}
+                        </div>
+
+                         <div class="col-md-12 form-group mt-3 mt-md-0">
+                            {{ form.desc(class="form-control", placeholder=form.desc.description) }}
+                        </div>
+
+                         <div class="col-md-12 form-group mt-3 mt-md-0">
+                             <label>Inserisci immagine :</label>
+                            {{ form.image }}
+                        </div>
+
+                     </div>
+                     <div class="text-left mt-2">
+                        {{ form.submit() }}
+                     </div>
+                  </form>
+               </div>
+
+                <div class="col-lg-3 text-center " data-aos="fade-left" data-aos-delay="200">
+                    <img src="../../static/img/switch.png" class="d-none d-lg-block d-xl-block" width="150" style="margin-top:220px">
+                </div>
+
+
+                <div class="col-lg-3 mt-lg-0 text-center" data-aos="fade-left" data-aos-delay="200">
+                  <div class="card" style="width: 18rem;">
+
+                      <img src="../../static/uploads/images/{{ item.Img_1 }}" class="card-img-top" alt="...">
+
+                        <div class="card-body px-0 py-4">
+                            <h5 class="card-title">{{ item.Nome }}</h5>
+                            <p class="card-text">{{ item.Desc }}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><a href="/vedi-annunci/{{ item.id }}" class="float-end">Vedi Annuncio <i class='bx bx-search-alt-2'></i></a></li>
+                        </ul>
+        </div>
+                </div>
+
+
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+{% endblock %}
+
+

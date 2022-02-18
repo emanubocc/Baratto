@@ -43,13 +43,17 @@ class Oggetto(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Nome = db.Column(db.String(64), nullable=False)
     Desc = db.Column(db.String(250), nullable=False)
-    Img_1 = db.Column(db.String(75), unique=True, nullable=False)
-    Img_2 = db.Column(db.String(75), unique=True, nullable=True)
-    Img_3 = db.Column(db.String(75), unique=True, nullable=True)
+    Img_1 = db.Column(db.String(75), nullable=False)
+    Img_2 = db.Column(db.String(75), nullable=True)
+    Img_3 = db.Column(db.String(75), nullable=True)
     Provincia = db.Column(db.String(30), nullable=False)
 
     # Tabella di relazione 1 Utente : N Oggetti
     id_utente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+
+    # Tabella di relazione 1 Oggetto : N Proposte
+    Proposta = db.relationship("Proposta")
+
 
     def __init__(self, nome, desc, img_1, img_2, img_3, provincia, id_utente):
 
@@ -63,3 +67,28 @@ class Oggetto(db.Model):
 
     def __repr__(self):
         return f'<Prodotto {self.id + self.Nome + self.Desc + self.Img_1 + self.Img_2 + self.Img_3 + self.Provincia!r}>'
+
+
+
+# Classe Proposta
+class Proposta(db.Model):
+
+    # Create a table in the db
+    __tablename__ = 'Proposta'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Nome = db.Column(db.String(64), nullable=False)
+    Desc = db.Column(db.String(250), nullable=False)
+    Img_1 = db.Column(db.String(75), nullable=False)
+
+    # Tabella di relazione 1 oggetto : N proposte
+    id_oggetto = db.Column(db.Integer, db.ForeignKey('Oggetto.id'))
+
+    def __init__(self, nome, desc, img_1, id_oggetto):
+
+        self.Nome = nome
+        self.Desc = desc
+        self.Img_1 = img_1
+        self.id_oggetto = id_oggetto
+
+    def __repr__(self):
+        return f'<Proposta {self.id + self.Nome + self.Desc + self.Img_1 + self.id_oggetto!r}>'

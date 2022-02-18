@@ -1,0 +1,59 @@
+{% extends "base-template.html" %}
+
+{% block title %}Modifica Annuncio{% endblock %}
+{% block breadcrumbs %}Modifica Annuncio{% endblock %}
+{% block breadcrumbslinks %}Profilo / Modifica Annuncio{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+      <section id="contact" class="contact">
+         <div class="container">
+            <div class="section-title" data-aos="fade-up">
+               <h2>Dati Annuncio</h2>
+               <p>Modifica annuncio</p>
+            </div>
+            <div class="row">
+               <div class="col-lg-6 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
+                  <form action="" method="post" role="form" class="email-form" enctype="multipart/form-data">
+                     <div class="row">
+                            {{ form.hidden_tag() }}
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+
+                            {{ form.nome(class='form-control', placeholder=item.Nome) }}
+                        </div>
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                             {{ form.desc(class='form-control', placeholder=item.Desc) }}
+                        </div>
+
+                        <div class="col-md-12 form-group mt-3 mt-md-0">
+                             {{ form.provincia(class='form-control') }}
+                        </div>
+
+                        <div class="col-md-8 form-group mt-3 mt-md-0">
+                             {{ form.image }}
+                        </div>
+                     </div>
+                     <div class="text-left mt-2">
+                         {{ form.submit() }}
+                     </div>
+                  </form>
+               </div>
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+{% endblock %}
+
+

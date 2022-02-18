@@ -1,16 +1,12 @@
-from urllib.parse import quote
 
-from flask import Blueprint, render_template, flash, request, url_for, redirect
+import uuid
+from flask import Blueprint, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash
 from flask_login import login_required, current_user
-from werkzeug.utils import secure_filename
-from functools import wraps
 
-
-
-from sqlalchemy import update, select, delete, desc
 from .forms import EditForm, ItemsForm
-from .models import Utente, Oggetto
+from .models import Utente, Proposta
+from .crud import *
 from . import db
 
 views = Blueprint('views', __name__)
@@ -20,6 +16,44 @@ views = Blueprint('views', __name__)
 def home():
     addclass = 'Homepage'
     return render_template('homepage.html', hideBreadcrumbs=addclass)
+
+
+@views.route('/vedi-annunci/proponi/<int:id_annuncio>',  methods=["GET", "POST"])
+@login_required
+def proposal(id_annuncio):
+    item = Oggetto.query.filter_by(id=id_annuncio).one_or_none()
+
+    if item.id_utente != current_user.id :
+        form_item = ItemsForm()
+
+        if form_item.validate_on_submit():
+
+            nome = form_item.nome.data
+            desc = form_item.desc.data
+            pics = request.files.getlist(form_item.image.name)
+
+            img_urls = []
+
+            if pics:
+                for img in pics:
+                    file_uuid = uuid.uuid4().hex
+
+                    if (len(file_uuid) > 70):
+                        file_uuid = file_uuid[0:70]
+
+                    file_uuid = file_uuid + '.jpg'
+                    img_urls.append(file_uuid)
+                    img.save('appbaratto/static/uploads/images/' + file_uuid)
+
+            img_1 = img_urls[0]
+            new_proposal = Proposta(nome, desc, img_1, item.id)
+
+    else:
+        flash('Non puoi fare una proposta al tuo stesso annuncio', category='error')
+        return redirect('/vedi-annunci/'+ str(id_annuncio))
+
+    return render_template('proposal.html', item=item, form=form_item)
+
 
 @views.route('/vedi-annunci')
 def allItems():
@@ -64,16 +98,55 @@ def delete_item( id_annuncio ):
 
     return redirect(url_for("views.yourItems"))
 
+
 @views.route('/vedi-annunci/modifica/<int:id_annuncio>', methods=["GET", "POST"])
-def edit_item():
+def edit_item( id_annuncio ):
     item = Oggetto.query.filter_by(id=id_annuncio).one_or_none()
 
-    return redirect(url_for("views.yourItems"))
+    # Creo form
+    form_items = ItemsForm()
+    if item.id_utente == current_user.id:
+        if form_items.validate_on_submit():
+
+            nome = form_items.nome.data
+            desc = form_items.desc.data
+            provincia = form_items.provincia.data
+            pics = request.files.getlist(form_items.image.name)
+
+            img_urls = []
+
+            if pics:
+                for img in pics:
+                    file_uuid = uuid.uuid4().hex
+
+                    if (len(file_uuid) > 70):
+                        file_uuid = file_uuid[0:70]
+
+                    file_uuid = file_uuid + '.jpg'
+                    img_urls.append(file_uuid)
+                    img.save('appbaratto/static/uploads/images/' + file_uuid)
+
+            img_1 = ""
+            img_2 = ""
+            img_3 = ""
+
+            img_1 = img_urls[0]
+            if (len(img_urls) == 2):
+                img_2 = img_urls[1]
+            if (len(img_urls) == 3):
+                img_2 = img_urls[1]
+                img_3 = img_urls[2]
+
+            update_item(nome, desc, img_1, img_2, img_3, provincia, id_annuncio)
+
+    return render_template('edit-item.html', item=item, form=form_items)
+
 
 @views.route('/profilo')
 @login_required
 def profile():
     return render_template('profile.html')
+
 
 @views.route('/profilo/i-tuoi-annunci')
 @login_required
@@ -87,12 +160,14 @@ def yourItems():
 
     return render_template('your-items.html', items=items)
 
+
 @views.route('/profilo/aggiungi-oggetto', methods=["GET", "POST"])
 @login_required
 def addItem():
     form_items = ItemsForm()
 
     if form_items.validate_on_submit():
+
         nome = form_items.nome.data
         desc = form_items.desc.data
         provincia = form_items.provincia.data
@@ -102,32 +177,30 @@ def addItem():
 
         if pics:
             for img in pics:
-                file_name = secure_filename(img.filename)
-                img_urls.append(file_name)
-                img.save('appbaratto/static/uploads/images/' + file_name)
+                file_uuid = uuid.uuid4().hex
 
-        img_1 = img_urls[0]
+                if (len(file_uuid) > 70):
+                    file_uuid = file_uuid[0:70]
+
+                file_uuid = file_uuid + '.jpg'
+                img_urls.append(file_uuid)
+                img.save('appbaratto/static/uploads/images/' + file_uuid)
+
+        img_1 = ""
         img_2 = ""
         img_3 = ""
 
+        img_1 = img_urls[0]
         if (len(img_urls) == 2):
             img_2 = img_urls[1]
         if (len(img_urls) == 3):
+            img_2 = img_urls[1]
             img_3 = img_urls[2]
 
         new_item = Oggetto(nome, desc, img_1, img_2, img_3, provincia, current_user.id)
 
-        # Inserimento in DB
-        try:
-            db.session.add(new_item)
-            db.session.commit()
-            flash('Inserimento annuncio avvenuto con successo', category='success')
-        except Exception as IntegrityError:
-            flash(f"Le immagini presentano nomi già utilizzati.", category='error')
-            db.session.rollback()
-        except Exception as e:
-            flash(f"Eccezione: {e}", category='error')
-            db.session.rollback()
+        # Insert in db
+        insert_item(new_item)
 
     return render_template('add-item.html', form=form_items)
 
@@ -161,4 +234,7 @@ def editUser():
 @views.errorhandler(404)
 def page_not_found(error):
     return render_template('errore-404.html'), 404
+
+
+
 
