@@ -1,0 +1,71 @@
+{% extends "base-template.html" %}
+
+{% block title %}Vedi proposte{% endblock %}
+{% block breadcrumbs %}Vedi proposte{% endblock %}
+{% block breadcrumbslinks %}Vedi proposte{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+      <section>
+         <div class="container">
+            <h4>Le tue proposte:</h4>
+            <div class="row">
+               {% for item in items %}
+                   <div class="col-lg-4 mt-lg-0 p-4" data-aos="fade-left" data-aos-delay="200">
+                        <div class="toast show" aria-live="assertive" aria-atomic="true">
+                          <div class="toast-header">
+                            <span class="numbered-circle {{item.accettata}}">&nbsp;</span>
+                            <strong class="me-auto">{{ item.Nome }}</strong>
+                            <button type="button" class="btn-show" title="Mostra" data-bs-toggle="modal" data-bs-target="#Modal{{ item.id }}" style="background: none;"><i class='bx bx-show'></i></button>
+                            <a href="" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
+                            <a href="/profilo/le-tue-proposte/elimina/{{ item.id }}" type="button" class="btn-close" title="Elimina"></a>
+
+                          </div>
+                          <div class="toast-body">
+                              {{ item.Desc }}
+                          <hr>
+                              <p> Stato proposta:
+                              {% if item.accettata == 0 %}
+                                 <span class="alert-danger"> RIFIUTATA </span>
+
+                              {% elif item.accettata == 1 %}
+                                   <span class="alert-success"> ACCETTATA </span>
+
+                              {% else %}
+                                    <span class="alert-warning"> DA VALUTARE </span>
+                              {% endif %}
+
+                          <p/>
+                          </div>
+                        </div>
+                   </div>
+
+                    <div  class="modal fade" id="Modal{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <img src="/static/uploads/images/{{ item.Img_1 }}">
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+{% endblock %}
+
+

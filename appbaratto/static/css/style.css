@@ -1543,9 +1543,9 @@ img {
 
 .card {
   background: #fafafa;
-  padding: 2em;
+  padding: 10px;
   line-height: 1.5em;
-  min-height:505px}
+  min-height:460px}
 
 @media screen and (min-width: 997px) {
   .wrapper {
@@ -1662,3 +1662,48 @@ img {
     line-height: 1.5;
     color: #6c6c6c;
     font-size:14px}
+
+.btn-show{
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    padding: 0.25em 0.75em;
+    color: #000;
+    border: 0;
+    border-radius: 0.25rem;
+    opacity: .5;
+}
+.btn-show i {
+    font-size: 25px;
+    margin-top: -4px;
+    margin-left: 3px;
+}
+.btn-show:hover i, .btn-show i:hover  {
+    color: #000;
+    text-decoration: none;
+    opacity: .75;
+}
+.num-prop{background: red;
+    padding: 1px 5px;
+    color: white;
+    font-size: 12px;}
+
+.numbered-circle {
+  padding: 2px 10px;border-radius: 5px;margin: 0 10px;"
+}
+
+.numbered-circle.False{
+  background:red;
+}
+.numbered-circle.True{
+  background:Green;
+}
+.numbered-circle.None{
+  background:Orange;
+}
+
+.prov{text-transform: uppercase}
+.toast-body span{
+  padding: 3px 10px;
+  border-radius: 20px;
+}

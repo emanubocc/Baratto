@@ -210,3 +210,4 @@
 function changeImage(img) {
    document.getElementById("primary_img").src = img;
 }
+

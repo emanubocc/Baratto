@@ -1,3 +1,4 @@
+from sqlalchemy import Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import UserMixin
@@ -20,6 +21,7 @@ class Utente(db.Model, UserMixin):
 
     # Tabella di relazione 1 Utente : N Oggetti
     Oggetto = db.relationship("Oggetto")
+    Utente_offerente = db.relationship("Proposta")
 
     def __init__(self, nome, cognome, password, email, citta, provincia, via):
 
@@ -43,10 +45,12 @@ class Oggetto(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Nome = db.Column(db.String(64), nullable=False)
     Desc = db.Column(db.String(250), nullable=False)
+    Oggetti_preferiti = db.Column(db.String(100), nullable=False)
     Img_1 = db.Column(db.String(75), nullable=False)
     Img_2 = db.Column(db.String(75), nullable=True)
     Img_3 = db.Column(db.String(75), nullable=True)
     Provincia = db.Column(db.String(30), nullable=False)
+
 
     # Tabella di relazione 1 Utente : N Oggetti
     id_utente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
@@ -55,10 +59,11 @@ class Oggetto(db.Model):
     Proposta = db.relationship("Proposta")
 
 
-    def __init__(self, nome, desc, img_1, img_2, img_3, provincia, id_utente):
+    def __init__(self, nome, desc, oggetti_preferiti, img_1, img_2, img_3, provincia, id_utente):
 
         self.Nome = nome
         self.Desc = desc
+        self.Oggetti_preferiti = oggetti_preferiti
         self.Img_1 = img_1
         self.Img_2 = img_2
         self.Img_3 = img_3
@@ -79,16 +84,40 @@ class Proposta(db.Model):
     Nome = db.Column(db.String(64), nullable=False)
     Desc = db.Column(db.String(250), nullable=False)
     Img_1 = db.Column(db.String(75), nullable=False)
+    accettata = db.Column(Boolean, unique=False, default=None, nullable=True)
 
     # Tabella di relazione 1 oggetto : N proposte
     id_oggetto = db.Column(db.Integer, db.ForeignKey('Oggetto.id'))
+    id_utente_offerente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
 
-    def __init__(self, nome, desc, img_1, id_oggetto):
+    def __init__(self, nome, desc, img_1, id_oggetto, id_utente_offerente, accettata):
 
         self.Nome = nome
         self.Desc = desc
         self.Img_1 = img_1
         self.id_oggetto = id_oggetto
+        self.id_utente_offerente = id_utente_offerente
+        self.accettata = accettata
 
     def __repr__(self):
-        return f'<Proposta {self.id + self.Nome + self.Desc + self.Img_1 + self.id_oggetto!r}>'
+        return f'<Proposta {self.id + self.Nome + self.Desc + self.Img_1 + self.id_oggetto + self.id_utente_offerente + self.accettata!r}>'
+
+# Classe Messaggi
+class Messaggi(db.Model):
+
+    __tablename__ = 'Messaggio'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.String(250), nullable=False)
+    mittente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+    destinatario = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+
+    def __init__(self, content, mittente, destinatario):
+
+        self.content = content
+        self.mittente = mittente
+        self.destinatario = destinatario
+
+
+    def __repr__(self):
+        return f'<Proposta {self.content + self.mittente + self.destinatario!r}>'

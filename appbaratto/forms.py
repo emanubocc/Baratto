@@ -39,8 +39,18 @@ class EditForm(FlaskForm):
 class ItemsForm(FlaskForm):
     nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')], description="Nome oggetto")
     desc = TextAreaField("", validators=[DataRequired(),  Length(min=1, max=250, message='Massimo 250 Caratteri')], description="Descrizione oggetto...")
+    oggetti_preferiti = TextAreaField("", validators=[DataRequired(),  Length(min=1, max=100, message='Massimo 100 Caratteri')], description="Oggetti che vorresti...")
     provincia = SelectField("", validators=[DataRequired()], choices=PROVINCIE_CHOICES)
     image = MultipleFileField('Images', validators=[DataRequired()] )
 
+
     submit = SubmitField("Invia")
 
+class ProposalForm(FlaskForm):
+    nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')],
+                       description="Nome oggetto")
+    desc = TextAreaField("", validators=[DataRequired(), Length(min=1, max=250, message='Massimo 250 Caratteri')],
+                         description="Descrizione oggetto...")
+    image = MultipleFileField('Images', validators=[DataRequired()])
+
+    submit = SubmitField("Invia")

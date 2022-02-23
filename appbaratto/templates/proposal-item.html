@@ -1,0 +1,58 @@
+{% extends "base-template.html" %}
+
+{% block title %}Vedi proposte{% endblock %}
+{% block breadcrumbs %}Vedi proposte{% endblock %}
+{% block breadcrumbslinks %}Vedi proposte{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+      <section>
+         <div class="container">
+            <h4>Proposte per oggetto #{{ item_1.id }} ({{ item_1.Nome }}):</h4>
+            <div class="row">
+               {% for item in proposal %}
+                   <div class="col-lg-4 mt-lg-0 p-4" data-aos="fade-left" data-aos-delay="200">
+                        <div class="toast show" aria-live="assertive" aria-atomic="true">
+                          <div class="toast-header">
+                            <span class="numbered-circle">&nbsp;</span>
+                            <strong class="me-auto">{{ item.Nome }}</strong>
+                            <button type="button" class="btn-show" title="Mostra" data-bs-toggle="modal" data-bs-target="#Modal{{ item.id }}" style="background: none;"><i class='bx bx-show'></i></button>
+                            <a href="{{ item_1.id }}/{{ item.id }}" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
+                            <a href="/vedi-annunci/proposte/{{ item_1.id }}/rifiuta/{{ item.id }}" type="button" class="btn-close" title="Rifiuta"></a>
+
+                          </div>
+                          <div class="toast-body">
+                              {{ item.Desc }}
+                          </div>
+                        </div>
+                   </div>
+
+                    <div  class="modal fade" id="Modal{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <img src="/static/uploads/images/{{ item.Img_1 }}">
+                            </div>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+         </div>
+      </section>
+
+   </div>
+</section>
+{% endblock %}
+
+
