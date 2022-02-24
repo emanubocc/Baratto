@@ -27,7 +27,7 @@
                             <span class="numbered-circle {{item.accettata}}">&nbsp;</span>
                             <strong class="me-auto">{{ item.Nome }}</strong>
                             <button type="button" class="btn-show" title="Mostra" data-bs-toggle="modal" data-bs-target="#Modal{{ item.id }}" style="background: none;"><i class='bx bx-show'></i></button>
-                            <a href="{{ item_1.id }}/{{ item.id }}" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
+                            <a href="/messaggia/mittente/{{ current_user.id }}/destinatario{{ item.id_utente_offerente }}/oggetto/{{ item.id }}" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
                             <a href="/vedi-annunci/proposte/{{ item_1.id }}/rifiuta/{{ item.id }}" type="button" class="btn-close" title="Rifiuta"></a>
                             <a href="/vedi-annunci/proposte/{{ item_1.id }}/accetta/{{ item.id }}" class="btn-show" title="Accetta"><i class='bx bx-check-circle'></i></a>
 
@@ -44,6 +44,7 @@
                                     <span class="alert-warning"> DA VALUTARE </span>
                               {% endif %}
                               </p>
+                           <small class="text-muted">Oggetto proposto da: {{ users[item.id_utente_offerente] }}</small>
                           </div>
                         </div>
                    </div>

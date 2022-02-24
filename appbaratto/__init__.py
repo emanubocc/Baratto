@@ -21,9 +21,13 @@ def create_app():
 
     from .views import views
     from .auth import auth
+    from .proposal import proposal
+    from .messages import messages
 
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(proposal, url_prefix='/')
+    app.register_blueprint(messages, url_prefix='/')
 
     from .models import Utente
     create_database(app)

@@ -108,16 +108,16 @@ class Messaggi(db.Model):
     __tablename__ = 'Messaggio'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    content = db.Column(db.String(250), nullable=False)
-    mittente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
-    destinatario = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+    Contenuto = db.Column(db.String(250), nullable=False)
+    Mittente = db.Column(db.Integer, db.ForeignKey('Utente.id'))
+    Destinatario = db.Column(db.Integer, db.ForeignKey('Utente.id'))
 
-    def __init__(self, content, mittente, destinatario):
+    def __init__(self, contenuto, mittente, destinatario):
 
-        self.content = content
-        self.mittente = mittente
-        self.destinatario = destinatario
+        self.Contenuto = contenuto
+        self.Mittente = mittente
+        self.Destinatario = destinatario
 
 
     def __repr__(self):
-        return f'<Proposta {self.content + self.mittente + self.destinatario!r}>'
+        return f'<Proposta {self.Content + self.Mittente + self.Destinatario!r}>'

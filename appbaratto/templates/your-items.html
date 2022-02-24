@@ -31,7 +31,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="/vedi-annunci/elimina/{{ item.id }}" class="float-end">Elimina Annuncio <i class='bx bx-message-square-x'></i></a></li>
                     <li class="list-group-item"><a href="/vedi-annunci/modifica/{{ item.id }}" class="float-end">Modifica Annuncio <i class='bx bx-edit-alt'></i></a></li>
-                    <li class="list-group-item"><a href="/vedi-annunci/proposte/{{ item.id }}" class="float-end">Vedi Proposte  <span class="num-prop rounded-circle">{{ count[loop.index-1] }}</span> <i class='bx bx-spreadsheet'></i></a></li>
+                    <li class="list-group-item"><a href="/vedi-annunci/proposte/{{ item.id }}" class="float-end">Vedi Proposte  <span class="num-prop rounded-circle">{{ count[item.id] }}</span> <i class='bx bx-spreadsheet'></i></a></li>
                     <li class="list-group-item"><a href="/vedi-annunci/{{ item.id }}" class="float-end">Vedi Annuncio <i class='bx bx-search-alt-2'></i></a></li>
 
                 </ul>
