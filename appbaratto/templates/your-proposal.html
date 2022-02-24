@@ -18,7 +18,7 @@
 
       <section>
          <div class="container">
-            <h4>Le tue proposte:</h4>
+            <h4>Le tue proposte inviate:</h4>
             <div class="row">
                {% for item in items %}
                    <div class="col-lg-4 mt-lg-0 p-4" data-aos="fade-left" data-aos-delay="200">
@@ -33,19 +33,18 @@
                           </div>
                           <div class="toast-body">
                               {{ item.Desc }}
+                          <p class="small">Oggetto richiesto: <a href="/vedi-annunci/{{ item.id_oggetto }}"> Vedi oggetto</a></p>
                           <hr>
                               <p> Stato proposta:
                               {% if item.accettata == 0 %}
                                  <span class="alert-danger"> RIFIUTATA </span>
-
                               {% elif item.accettata == 1 %}
                                    <span class="alert-success"> ACCETTATA </span>
-
                               {% else %}
                                     <span class="alert-warning"> DA VALUTARE </span>
                               {% endif %}
+                              </p>
 
-                          <p/>
                           </div>
                         </div>
                    </div>

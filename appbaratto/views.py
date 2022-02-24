@@ -35,6 +35,56 @@ def show_proposal(id_annuncio):
     return render_template('proposal-item.html', item_1=item_1, proposal=proposals)
 
 
+@views.route('/vedi-annunci/proposte/<int:id_oggetto>/rifiuta/<int:id_proposta>')
+@login_required
+def reject_proposal(id_proposta, id_oggetto):
+    proposal = Proposta.query.filter_by(id=id_proposta).one_or_none()
+    item = Oggetto.query.filter_by(id=id_oggetto).one_or_none()
+
+    if proposal is None:
+        flash('Nessun annuncio trovato con questo id.', category='error')
+
+    else:
+        if current_user.id == item.id_utente:  # Se l'utente è proprietario dell'annuncio
+            try:
+                db.session.execute(update(Proposta).where(Proposta.id == id_proposta).values(accettata=False))
+                db.session.commit()
+                flash('La proposta è stata rifiutata con successo.', category='success')
+
+            except Exception as e:
+                flash(f"Eccezione: {e}", category='error')
+                db.session.rollback()
+
+        else:
+            flash('Non hai i permessi per accettare questa proposta.', category='error')
+
+    return redirect('/vedi-annunci/proposte/' + str(id_oggetto))
+
+
+@views.route('/vedi-annunci/proposte/<int:id_oggetto>/accetta/<int:id_proposta>')
+@login_required
+def accept_proposal(id_proposta, id_oggetto):
+    proposal = Proposta.query.filter_by(id=id_proposta).one_or_none()
+    item = Oggetto.query.filter_by(id=id_oggetto).one_or_none()
+
+
+    if proposal is None:
+        flash('Nessun annuncio trovato con questo id.', category='error')
+
+    else:
+        if current_user.id == item.id_utente:  # Se l'utente è proprietario dell'annuncio
+            try:
+                db.session.execute(update(Proposta).where(Proposta.id == id_proposta).values(accettata=True))
+                db.session.commit()
+                flash('Dati aggiornati con successo', category='success')
+            except Exception as e:
+                flash(f"Eccezione: {e}", category='error')
+                db.session.rollback()
+
+        else:
+            flash('Non hai i permessi per accettare questa proposta.', category='error')
+
+    return redirect('/vedi-annunci/proposte/' + str(id_oggetto))
 
 @views.route('/vedi-annunci/proponi/<int:id_annuncio>', methods=["GET", "POST"])
 @login_required
@@ -85,7 +135,7 @@ def your_proposal():
     return render_template('your-proposal.html', items=all_proposal)
 
 @views.route('/vedi-annunci')
-def allItems():
+def all_items():
     all_items = Oggetto.query.order_by(desc(Oggetto.Provincia)).all()
 
     if all_items:
@@ -126,10 +176,10 @@ def delete_proposal(id_proposta):
                 flash(f"Eccezione: {e}", category='error')
                 db.session.rollback()
         else:
-            flash('Non hai i permessi per eliminare a questo oggetto.', category='error')
+            flash('Non hai i permessi per eliminare questo oggetto.', category='error')
 
-    return redirect('/le-tue-proposte/')
 
+    return redirect('/profilo/le-tue-proposte')
 
 
 @views.route('/vedi-annunci/elimina/<int:id_annuncio>')
