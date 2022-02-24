@@ -1,0 +1,72 @@
+{% extends "base-template.html" %}
+
+{% block title %}Vedi annunci{% endblock %}
+{% block breadcrumbs %}Vedi annunci{% endblock %}
+{% block breadcrumbslinks %}Vedi annunci{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+ {% if item %}
+   <div class="container">
+		<div class="card">
+			<div class="container-fliud">
+				<div class="wrapper row">
+					<div class="preview col-md-4 p-4">
+
+						<div class="preview-pic tab-content">
+						  <div class="tab-pane active" id="pic-1"><img id="primary_img" src="../static/uploads/images/{{ item.Img_1}}" /></div>
+						</div>
+
+						<ul class="preview-thumbnail nav nav-tabs">
+						  <li><a data-target="#pic-1" data-toggle="tab"><img src="../static/uploads/images/{{ item.Img_1}}" onclick="changeImage('../static/uploads/images/{{ item.Img_1 }}');" /></a></li>
+
+                            {% if item.Img_2 %}
+						  <li><a data-target="#pic-2" data-toggle="tab"><img src="../static/uploads/images/{{ item.Img_2}}" onclick="changeImage('../static/uploads/images/{{ item.Img_2 }}');" /></a></li>
+                            {% endif %}
+
+                            {% if item.Img_3 %}
+						  <li><a data-target="#pic-3" data-toggle="tab" ><img src="../static/uploads/images/{{ item.Img_3}}" onclick="changeImage('../static/uploads/images/{{ item.Img_3 }}');" /></a></li>
+                            {% endif %}
+						</ul>
+
+					</div>
+					<div class="details col-md-8 p-4">
+                        <h6><b>Titolo annuncio:</b></h6>
+						<h3 class="product-title">{{ item.Nome}}</h3>
+
+                        <h6><b>Descrizione articolo:</b></h6>
+						<p class="product-description">{{ item.Desc }}</p>
+
+                        <h6><b>Oggetti che vorrei:</b></h6>
+						<p class="product-description">{{ item.Oggetti_preferiti }}</p>
+
+                        <h6><b>Dove si trova:</b></h6>
+                        <p class="product-description prov">({{ item.Provincia }})</p>
+
+						<div class="action">
+							<a href="/vedi-annunci/proponi/{{ item.id }}" class="btn btn-primary" type="button">Fai una proposta</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+   {% endif %}
+
+
+
+   </div>
+</section>
+{% endblock %}
+
+
+
