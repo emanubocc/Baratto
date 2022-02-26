@@ -15,11 +15,20 @@
          </div>
      {% endfor %}
 
+       <div class="col-lg-4 col-md-6 mt-4 ">
+            <ul class="list-group">
+
+                {% for id, dati in users_msg.items() %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center p-4 cursor-p"  onclick="window.location='/profilo/messaggia/destinatario/{{ id }}'">
+                        <span class="text-muted"> Visuliazza messaggi di <b>{{ dati[0] }}</b></span>
+                        <span class="badge bg-primary rounded-pill">{{ dati[1] }}</span>
+                    </li>
+                 {% endfor %}
+            </ul>
+       </div>
 
 
-   {% for id, Nome in users_msg.items() %}
-        {{ key }}{{ value }}
-   {% endfor %}
+
 
    </div>
 </section>

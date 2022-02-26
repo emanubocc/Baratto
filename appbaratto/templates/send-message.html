@@ -16,7 +16,10 @@
      {% endfor %}
 
 
-
+ {% for message in msgs %}
+     {{ message.id }} {{ message.Contenuto }}
+     <br>
+ {% endfor %}
 
    </div>
 </section>
