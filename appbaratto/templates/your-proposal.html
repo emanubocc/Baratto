@@ -27,7 +27,7 @@
                             <span class="numbered-circle {{item.accettata}}">&nbsp;</span>
                             <strong class="me-auto">{{ item.Nome }}</strong>
                             <button type="button" class="btn-show" title="Mostra" data-bs-toggle="modal" data-bs-target="#Modal{{ item.id }}" style="background: none;"><i class='bx bx-show'></i></button>
-                            <a href="/messaggia/mittente/{{ current_user.id }}/destinatario{{ item.id_utente_offerente }}/oggetto/{{ item.id }}" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
+                            <a href="/profilo/messaggia/destinatario/{{ item.id_utente_offerente }}" class="btn-show" title="Chatta"><i class='bx bx-message-dots' ></i></a>
                             <a href="/profilo/le-tue-proposte/elimina/{{ item.id }}" type="button" class="btn-close" title="Elimina"></a>
 
                           </div>

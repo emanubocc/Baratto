@@ -3,8 +3,8 @@ from flask import Blueprint, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash
 from flask_login import login_required, current_user
 
-from .forms import EditForm, ItemsForm, ProposalForm
-from .models import Utente, Proposta
+from .forms import EditForm, ItemsForm
+from .models import Utente
 from .crud import *
 from . import db
 

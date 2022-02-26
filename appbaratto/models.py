@@ -118,6 +118,3 @@ class Messaggi(db.Model):
         self.Mittente = mittente
         self.Destinatario = destinatario
 
-
-    def __repr__(self):
-        return f'<Proposta {self.Content + self.Mittente + self.Destinatario!r}>'

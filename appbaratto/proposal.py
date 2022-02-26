@@ -24,9 +24,8 @@ def show_proposal(id_annuncio):
             flash('Non ci sono proposte per questo oggetto.', category='error')
         else:
             for proposal in proposals:
-                Nome =  Utente.query.filter_by(id=proposal.id_utente_offerente).with_entities(Utente.Nome).one_or_none()
-                name_trunk = str(Nome)
-                users[proposal.id_utente_offerente] = name_trunk[2:int(len(Nome))-4]
+                Nome =  (Utente.query.filter_by(id=proposal.id_utente_offerente).first()).Nome
+                users[proposal.id_utente_offerente] = Nome
 
     else:
         flash('Non puoi vedere le proposte di un altro utente.', category='error')

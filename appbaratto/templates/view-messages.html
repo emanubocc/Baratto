@@ -1,0 +1,29 @@
+{% extends "base-template.html" %}
+
+{% block title %}Vedi messaggi{% endblock %}
+{% block breadcrumbs %}Vedi messaggi{% endblock %}
+{% block breadcrumbslinks %}Profilo / Vedi messaggi{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+
+   {% for id, Nome in users_msg.items() %}
+        {{ key }}{{ value }}
+   {% endfor %}
+
+   </div>
+</section>
+{% endblock %}
+
+
+

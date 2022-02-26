@@ -1,0 +1,26 @@
+{% extends "base-template.html" %}
+
+{% block title %}Invia messaggio{% endblock %}
+{% block breadcrumbs %}Invia messaggio{% endblock %}
+{% block breadcrumbslinks %}Invia messaggio{% endblock %}
+
+{% block content %}
+  <section class="inner-page">
+   <div class="container">
+
+     {% for message in get_flashed_messages() %}
+         <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+               {{ message }}
+             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+     {% endfor %}
+
+
+
+
+   </div>
+</section>
+{% endblock %}
+
+
+
