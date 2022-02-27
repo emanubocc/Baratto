@@ -15,7 +15,7 @@ def create_app():
 
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    app.config['SQLALCHEMY_ECHO'] = True
+    #app.config['SQLALCHEMY_ECHO'] = True
 
     db.init_app(app)
 
