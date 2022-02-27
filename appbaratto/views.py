@@ -60,7 +60,7 @@ def delete_item(id_annuncio):
         else:
             flash('Non hai i permessi per eliminare a questo oggetto.', category='error')
 
-    return redirect(url_for("views.yourItems"))
+    return redirect(url_for("views.your_items"))
 
 
 @views.route('/vedi-annunci/modifica/<int:id_annuncio>', methods=["GET", "POST"])
