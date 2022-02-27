@@ -3,7 +3,7 @@ from flask import Blueprint, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash
 from flask_login import login_required, current_user
 
-from .forms import EditForm, ItemsForm
+from .forms import EditForm, ItemsForm, RegionForm
 from .models import Utente
 from .crud import *
 from . import db
@@ -19,6 +19,9 @@ def home():
 
 @views.route('/vedi-annunci')
 def all_items():
+
+    region_form = RegionForm()
+
     all_items = Oggetto.query.order_by(desc(Oggetto.Provincia)).all()
 
     if all_items:
@@ -30,7 +33,26 @@ def all_items():
     else:
         flash('Non ci sono annunci disponibili', category='error')
 
-    return render_template('all-items.html', items=all_items)
+    return render_template('all-items.html', items=all_items, form=region_form)
+
+
+@views.route('/vedi-annunci/regione/<provincia>')
+def all_region_items(provincia):
+
+    region_form = RegionForm()
+
+    all_items = Oggetto.query.filter_by(Provincia=provincia).all()
+
+    if all_items:
+        for item in all_items:  # Tronca nomi
+            if len(item.Nome) > 20:
+                item.Nome = item.Nome[0:20] + " ..."
+            if len(item.Desc) > 60:
+                item.Desc = item.Desc[0:60] + " ..."
+    else:
+        flash('Non ci sono annunci disponibili', category='error')
+
+    return render_template('all-items.html', items=all_items, form=region_form)
 
 
 @views.route('/vedi-annunci/<int:id_annuncio>')

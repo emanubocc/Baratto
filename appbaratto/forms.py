@@ -54,3 +54,7 @@ class ProposalForm(FlaskForm):
 
 class MessageForm(FlaskForm):
     contenuto = StringField("", validators=[Length(min=1, max=64, message='Massimo 250 Caratteri')], description="Scrivi il tuo messaggio...")
+
+
+class RegionForm(FlaskForm):
+    provincia = SelectField("", choices=PROVINCIE_CHOICES)

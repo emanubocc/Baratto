@@ -14,12 +14,17 @@
              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
          </div>
      {% endfor %}
+
+   {{ form.hidden_tag() }}
+   {{ form.provincia( class="form-control selectMod", onchange="location='/vedi-annunci/regione/'+ this.value;" ) }}
+
+
 <div class="card-group">
 {% set delay = namespace(value=50)  %}
    {% for item in items %}
     <div class="col-lg-2 col-md-2 mt-4 " data-aos="fade-left" data-aos-delay="{{ delay.value }}">
        <div class="card m-2">
-         <img src="../static/uploads/images/{{ item.Img_1 }}" class="card-img-top" alt="...">
+         <img src={{ url_for('static', filename='/uploads/images/'+item.Img_1) }} class="card-img-top" alt="...">
             <div class="card-body px-0 py-4">
                 <h5 class="card-title">{{ item.Nome }}</h5>
                 <p class="card-text">{{ item.Desc }}</p>
