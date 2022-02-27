@@ -19,3 +19,12 @@ Install and update using `pip`:
  
     pip install git+https://github.com/maxcountryman/flask-uploads.git@f66d7dc
 
+Login
+----------
+You can use these credentials to test features:
+
+email: pinobianchi@gmail.com
+psw: 123456
+
+email: antoniorossi@gmail.com 
+psw: 123456
