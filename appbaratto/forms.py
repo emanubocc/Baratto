@@ -47,10 +47,10 @@ class ItemsForm(FlaskForm):
     submit = SubmitField("Invia")
 
 class ProposalForm(FlaskForm):
-    nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')],
-                       description="Nome oggetto")
-    desc = TextAreaField("", validators=[DataRequired(), Length(min=1, max=250, message='Massimo 250 Caratteri')],
-                         description="Descrizione oggetto...")
+    nome = StringField("", validators=[DataRequired(), Length(min=1, max=64, message='Massimo 64 Caratteri')],description="Nome oggetto")
+    desc = TextAreaField("", validators=[DataRequired(), Length(min=1, max=250, message='Massimo 250 Caratteri')],description="Descrizione oggetto...")
     image = MultipleFileField('Images', validators=[DataRequired()])
-
     submit = SubmitField("Invia")
+
+class MessageForm(FlaskForm):
+    contenuto = StringField("", validators=[Length(min=1, max=64, message='Massimo 250 Caratteri')], description="Scrivi il tuo messaggio...")

@@ -117,7 +117,7 @@ def add_proposal(id_annuncio):
 
             img_1 = img_urls[0]
             new_proposal = Proposta(nome, desc, img_1, item.id, current_user.id, None)
-            insert_proposal(new_proposal)
+            insert(new_proposal)
 
     else:
         flash('Non puoi fare una proposta al tuo stesso annuncio', category='error')

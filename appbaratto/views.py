@@ -175,7 +175,7 @@ def addItem():
         new_item = Oggetto(nome, desc, oggetti_preferiti, img_1, img_2, img_3, provincia, current_user.id)
 
         # Insert in db
-        insert_item(new_item)
+        insert(new_item)
 
     return render_template('add-item.html', form=form_items)
 

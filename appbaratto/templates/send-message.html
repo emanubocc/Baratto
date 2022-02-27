@@ -16,14 +16,44 @@
      {% endfor %}
 
 
- {% for message in msgs %}
-     {{ message.id }} {{ message.Contenuto }}
-     <br>
- {% endfor %}
+
+   <div class="content">
+        <div class="col-lg-6 col-md-6 mt-4">
+            <div class="contact-profile">
+                <p>Scambia messaggi con: <b>{{ nome_utente }}</b></p>
+            </div>
+
+            <div class="messages">
+            {% if msgs %}
+                {% set pick_class = msgs[0].Mittente %}
+            {% for message in msgs %}
+                <div class=" {% if pick_class == message.Mittente %}msg-left{% else %}msg-right{% endif %}">
+                        {{ message.Contenuto }}
+                </div>
+            {% endfor %}
+            {% endif %}
+            </div>
+
+            <div class="message-input">
+                <div class="wrap">
+                    <form action="" method="post" role="form">
+                        {{ form.hidden_tag() }}
+                        {{ form.contenuto( placeholder=form.contenuto.description) }}
+                        <button id="submit" name="submit" type="submit" ><i class='bx bx-send'></i></button>
+                    </form>
+                </div>
+		    </div>
+
+
+
+	    </div>
+   </div>
+
+
+
 
    </div>
 </section>
 {% endblock %}
-
 
 

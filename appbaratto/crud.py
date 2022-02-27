@@ -16,26 +16,13 @@ def update_item(nome, desc, img_1, img_2, img_3, provincia, id_annuncio, oggetti
         db.session.rollback()
 
 
-def insert_item(new_item):
+def insert(new_item):
     # Inserimento in DB
     try:
         db.session.add(new_item)
         db.session.commit()
-        flash('Inserimento annuncio avvenuto con successo', category='success')
+        flash('Inserimento avvenuto con successo', category='success')
     except Exception as e:
         flash(f"Eccezione: {e}", category='error')
         db.session.rollback()
 
-
-def insert_proposal(new_proposal):
-    # Inserimento in DB
-    print("hello!")
-    try:
-        print("hi!")
-        db.session.add(new_proposal)
-        db.session.commit()
-        flash('Inserimento annuncio avvenuto con successo', category='success')
-    except Exception as e:
-        flash(f"Eccezione: {e}", category='error')
-        db.session.rollback()
-    print("bye!")
